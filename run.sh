@@ -21,6 +21,9 @@
 # ----------------------------------------------------------------
 set -e
 
+export MASTER_HOST_PORT=8085
+export KUBERNETES_MASTER="http://localhost:$MASTER_HOST_PORT"
+
 SECONDS=0
 docker_image_dir="bin/kubernetes/v1.2.0/docker/images/"
 

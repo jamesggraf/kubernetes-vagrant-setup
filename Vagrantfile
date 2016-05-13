@@ -91,6 +91,7 @@ NODES = ENV['NODES'] || 1
 
 MASTER_MEM = ENV['MASTER_MEM'] || 1024
 MASTER_CPUS = ENV['MASTER_CPUS'] || 1
+MASTER_HOST_PORT = ENV['MASTER_HOST_PORT'] || 8080
 
 NODE_MEM= ENV['NODE_MEM'] || 4096
 NODE_CPUS = ENV['NODE_CPUS'] || 1
@@ -213,6 +214,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # then to run as many times as the total number of VMs we only call them
       # in the master (re: emyl/vagrant-triggers#13)...
       if vmName == "master"
+        kHost.vm.network :forwarded_port, host: MASTER_HOST_PORT, guest: 8080
         kHost.trigger.before [:up, :provision] do
           info "Setting Kubernetes version #{KUBERNETES_VERSION}"
           sedInplaceArg = OS.mac? ? " ''" : ""
